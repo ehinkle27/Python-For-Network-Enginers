@@ -6,16 +6,16 @@ import os
 import time
 import datetime
 
-hosts = euf.get_hosts_from_file('hosts.txt')
-accounts = euf.get_accounts_from_file('accounts.cfg')
+hosts = euf.get_hosts_from_file('c:\\network_configs\\hosts.txt')
+accounts = euf.get_accounts_from_file('c:\\network_configs\\accounts.cfg')
 
 def dump_config(job, host, conn):
     """Connect to device, trim config file a bit, write to file"""
     conn.execute('term len 0')
     conn.execute('show run')
     #get the actual hostname of the device
-    hostname = eum.first_match(conn, r '*hostname\s(.+)$')
-    cfg_file = 'c:\network_configs\' + hostname.strip() + '.cfg'
+    hostname = eum.first_match(conn, r'*hostname\S(.+)$')
+    cfg_file = 'c:\\network_configs\\' + hostname.strip() + '.cfg'
     config = conn.response.splitlines()
     # a little cleanup
     for i in range(3):
