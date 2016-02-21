@@ -14,7 +14,7 @@ def dump_config(job, host, conn):
     conn.execute('term len 0')
     conn.execute('show run')
     #get the actual hostname of the device
-    hostname = eum.first_match(conn, r'*hostname\S(.+)$')
+    hostname = eum.first_match(conn, r'^hostname\s(.+)$')
     cfg_file = 'c:\\network_configs\\' + hostname.strip() + '.cfg'
     config = conn.response.splitlines()
     # a little cleanup
@@ -26,3 +26,4 @@ def dump_config(job, host, conn):
     with open(cfg_file, 'w') as f:
         for line in config:
             f.write(line +'\n')
+eus.start(accounts, hosts, dump_config, max_threads=2)
